@@ -3,11 +3,17 @@
 #include "Objetos.h"
 #include "map.h"
 
+#include "ECS.h"
+#include "componentes.h"
+
 objetos* player;
 objetos* profesor;
 map* mapa;
 
 SDL_Renderer* juego::renderer = nullptr;
+
+manager Manager;
+auto& NewPlayer(Manager.addentity());
 
 juego::juego()
 {}
@@ -45,7 +51,9 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 	player = new objetos("assets/player.png", 0, 0);
 	profesor = new objetos("assets/profesor.png", 50, 50);
 	mapa = new map();
-		
+
+	NewPlayer.addcomponent<Positioncomponent>();
+	NewPlayer.getcomponent<Positioncomponent>().setPos(500,500);
 }
 
 void juego::handleevent()
@@ -66,7 +74,10 @@ void juego::update()
 {
 	player->update();
 	profesor->update();
-	//mapa->LoadMap();
+	Manager.update();
+	
+	std::cout << NewPlayer.getcomponent<Positioncomponent>().x() << "," <<
+		NewPlayer.getcomponent<Positioncomponent>().y() << std::endl;
 }
 
 void juego::render()
