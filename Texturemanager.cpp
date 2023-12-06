@@ -8,3 +8,8 @@ SDL_Texture* Texturemanager::LoadTexture(const char* texture)
 
 	return tex; 
 }
+
+void Texturemanager::Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest)
+{
+	SDL_RenderCopy(juego::renderer, tex, &src, &dest);
+}

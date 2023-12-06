@@ -1,9 +1,11 @@
 #include "juego.hpp"
 #include "Texturemanager.h"
 #include "Objetos.h"
+#include "map.h"
 
 objetos* player;
 objetos* profesor;
+map* mapa;
 
 SDL_Renderer* juego::renderer = nullptr;
 
@@ -42,6 +44,7 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 	}
 	player = new objetos("assets/player.png", 0, 0);
 	profesor = new objetos("assets/profesor.png", 50, 50);
+	mapa = new map();
 		
 }
 
@@ -63,11 +66,13 @@ void juego::update()
 {
 	player->update();
 	profesor->update();
+	//mapa->LoadMap();
 }
 
 void juego::render()
 {
 	SDL_RenderClear(renderer);
+	mapa->DrawMap();
 	player->render();
 	profesor->render();
 	SDL_RenderPresent(renderer);
