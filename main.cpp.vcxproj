@@ -135,14 +135,21 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="objetos.cpp" />
     <ClCompile Include="Texturemanager.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="collision.h" />
     <ClInclude Include="componentes.h" />
+    <ClInclude Include="controles.h" />
     <ClInclude Include="ECS.h" />
+    <ClInclude Include="hitbox.h" />
     <ClInclude Include="juego.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="objetos.h" />
+    <ClInclude Include="transformcomponent.h" />
+    <ClInclude Include="Spritecomponent.h" />
     <ClInclude Include="Texturemanager.h" />
+    <ClInclude Include="vector2d.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

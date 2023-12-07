@@ -1,19 +1,16 @@
 #include "juego.hpp"
 #include "Texturemanager.h"
-#include "Objetos.h"
-#include "map.h"
-
-#include "ECS.h"
 #include "componentes.h"
+#include "map.h"
+#include "vector2d.h"
 
-objetos* player;
-objetos* profesor;
 map* mapa;
+manager Manager;
 
 SDL_Renderer* juego::renderer = nullptr;
+SDL_Event juego::event;
 
-manager Manager;
-auto& NewPlayer(Manager.addentity());
+auto& Player(Manager.addentity());
 
 juego::juego()
 {}
@@ -48,17 +45,16 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 	{
 		isrunnig = false;
 	}
-	player = new objetos("assets/player.png", 0, 0);
-	profesor = new objetos("assets/profesor.png", 50, 50);
 	mapa = new map();
-
-	NewPlayer.addcomponent<Positioncomponent>();
-	NewPlayer.getcomponent<Positioncomponent>().setPos(500,500);
+	Player.addcomponent<transformcomponent>();
+	Player.addcomponent<spritecomponent>("assets/player.png");
+	Player.addcomponent<controles>();
 }
 
 void juego::handleevent()
 {
-	SDL_Event event;
+	
+
 	SDL_PollEvent(&event);
 	switch (event.type) 
 	{
@@ -72,20 +68,16 @@ void juego::handleevent()
 
 void juego::update()
 {
-	player->update();
-	profesor->update();
 	Manager.update();
+	Manager.refresh();
 	
-	std::cout << NewPlayer.getcomponent<Positioncomponent>().x() << "," <<
-		NewPlayer.getcomponent<Positioncomponent>().y() << std::endl;
 }
 
 void juego::render()
 {
 	SDL_RenderClear(renderer);
 	mapa->DrawMap();
-	player->render();
-	profesor->render();
+	Manager.draw();
 	SDL_RenderPresent(renderer);
 
 }
