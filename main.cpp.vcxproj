@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="juego.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />

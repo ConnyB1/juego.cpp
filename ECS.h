@@ -58,13 +58,15 @@ public:
 	}
 	void draw() 
 	{
-		for (auto& c : components) c->draw(); for (auto& c : components) c->draw();
+		for (auto& c : components) c->draw();
 	}
+
 	bool isActive() const { return active; }
 	void destroy() { active = false; }
-	template <typename T> bool hascomponent() const
+	template <typename T>
+	bool hascomponent() const
 	{
-		return componentBitSet[getcomponentTypeID<T>];
+		return componentBitSet[getcomponentTypeID<T>()];
 	}
 
 	template <typename T, typename... TArgs>
@@ -86,7 +88,6 @@ public:
 		auto ptr(componentArray[getcomponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);
 	}
-	//gameobject.getcomponent<positioncomponent>().setXpos(25);
 };
 
 class manager

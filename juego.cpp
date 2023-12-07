@@ -3,6 +3,7 @@
 #include "componentes.h"
 #include "map.h"
 #include "vector2d.h"
+#include "collision.h"
 
 map* mapa;
 manager Manager;
@@ -11,6 +12,7 @@ SDL_Renderer* juego::renderer = nullptr;
 SDL_Event juego::event;
 
 auto& Player(Manager.addentity());
+auto& wall(Manager.addentity());
 
 juego::juego()
 {}
@@ -26,13 +28,8 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 	}
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		std::cout << "Subsystems Initialised!..." << std::endl;
 
 		window = SDL_CreateWindow(title, xpos, ypos, ancho, altura, flags);
-		if (window)
-		{
-			std::cout << "Window created!" << std::endl;
-		}
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
@@ -40,15 +37,17 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 			std::cout << "Renderer created!" << std::endl;
 		}
 		isrunnig = true;
-		}
-	else
-	{
-		isrunnig = false;
 	}
+
 	mapa = new map();
-	Player.addcomponent<transformcomponent>();
+	Player.addcomponent<transformcomponent>(2);
 	Player.addcomponent<spritecomponent>("assets/player.png");
 	Player.addcomponent<controles>();
+	Player.addcomponent<hitbox>("player");
+
+	wall.addcomponent<transformcomponent>(300.0f, 300.0f, 300, 20, 1);
+	wall.addcomponent<spritecomponent>("assets/grass.png");
+	wall.addcomponent<hitbox>("wall");
 }
 
 void juego::handleevent()
@@ -70,6 +69,14 @@ void juego::update()
 {
 	Manager.update();
 	Manager.refresh();
+	
+	
+	if(collision::AABB(Player.getcomponent<hitbox>().collider,
+		wall.getcomponent<hitbox>().collider))
+	{
+		Player.getcomponent<transformcomponent>().scale = 1;
+		std::cout <<" wall HIT!" << std::endl;
+	}
 	
 }
 

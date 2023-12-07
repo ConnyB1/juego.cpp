@@ -22,8 +22,6 @@ public:
 		SDL_DestroyTexture(texture);
 	}
 
-
-
 	void settext(const char* path)
 	{
 		texture = Texturemanager::LoadTexture(path);

@@ -21,10 +21,26 @@ public:
 		position.y = 0.0f;
 	}
 
+	transformcomponent(int sc)
+	{
+		position.x = 0.0f;
+		position.y = 0.0f;
+		scale = sc;
+	}
+
 	transformcomponent(float x, float y)
 	{
 		position.x = x;
 		position.y = y;
+	}
+
+	transformcomponent(float x, float y, int h, int w, int sc)
+	{
+		position.x = x;
+		position.y = y;
+		altura = h;
+		ancho = w;
+		scale = sc;
 	}
 
 	void init() override
