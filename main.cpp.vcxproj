@@ -147,6 +147,7 @@
     <ClInclude Include="juego.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="objetos.h" />
+    <ClInclude Include="tilecomponent.h" />
     <ClInclude Include="transformcomponent.h" />
     <ClInclude Include="Spritecomponent.h" />
     <ClInclude Include="Texturemanager.h" />

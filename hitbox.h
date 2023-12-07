@@ -24,6 +24,8 @@ public:
 			entity->addcomponent<transformcomponent>();
 		}
 		transform = &entity->getcomponent<transformcomponent>();
+
+		juego::colliders.push_back(this);
 	}
 
 	void update() override

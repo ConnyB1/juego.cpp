@@ -1,5 +1,5 @@
 #include "collision.h"
-
+#include "hitbox.h"
 bool collision::AABB(const SDL_Rect& recA, const SDL_Rect& recB)
 {
 	if (
@@ -12,4 +12,17 @@ bool collision::AABB(const SDL_Rect& recA, const SDL_Rect& recB)
 		return true;
 	}
 	return false;
+}
+
+bool collision::AABB(const hitbox& colA, const hitbox& colB)
+{
+	if (AABB(colA.collider, colB.collider))
+	{
+		std::cout << colA.tag << " hit: " << colB.tag << std::endl;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

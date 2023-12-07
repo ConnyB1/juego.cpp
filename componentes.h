@@ -5,3 +5,4 @@
 #include "Spritecomponent.h"
 #include "controles.h"
 #include "hitbox.h"
+#include "tilecomponent.h"

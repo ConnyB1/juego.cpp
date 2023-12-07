@@ -11,8 +11,12 @@ manager Manager;
 SDL_Renderer* juego::renderer = nullptr;
 SDL_Event juego::event;
 
+std::vector<hitbox*> juego::colliders;
+
 auto& Player(Manager.addentity());
 auto& wall(Manager.addentity());
+
+
 
 juego::juego()
 {}
@@ -39,7 +43,8 @@ void juego::init(const char* title, int xpos, int ypos, int ancho, int altura, b
 		isrunnig = true;
 	}
 
-	mapa = new map();
+	map::LoadMap("assets/p16x16.map", 16, 16);
+
 	Player.addcomponent<transformcomponent>(2);
 	Player.addcomponent<spritecomponent>("assets/player.png");
 	Player.addcomponent<controles>();
@@ -70,20 +75,18 @@ void juego::update()
 	Manager.update();
 	Manager.refresh();
 	
-	
-	if(collision::AABB(Player.getcomponent<hitbox>().collider,
-		wall.getcomponent<hitbox>().collider))
+	for (auto cc  :  colliders)
 	{
-		Player.getcomponent<transformcomponent>().scale = 1;
-		std::cout <<" wall HIT!" << std::endl;
+		collision::AABB(Player.getcomponent<hitbox>(), *cc);
 	}
+	
 	
 }
 
 void juego::render()
 {
 	SDL_RenderClear(renderer);
-	mapa->DrawMap();
+	//mapa->DrawMap();
 	Manager.draw();
 	SDL_RenderPresent(renderer);
 
@@ -94,4 +97,11 @@ void juego::clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+}
+
+void juego::AddTile(int id, int x, int y)
+{
+	auto& tile(Manager.addentity());
+	tile.addcomponent<tilecomponent>(x, y, 32, 32, id);
+	tile.addcomponent<hitbox>("tile");
 }
