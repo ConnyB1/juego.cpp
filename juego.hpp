@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-class hitbox;
+class hitbox; //peuwb
 
 class juego
 {
